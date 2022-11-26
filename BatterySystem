@@ -1,0 +1,39 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class BatterySystem : MonoBehaviour
+{
+   public float battery = 100f;  
+   public float batteryMax = 100f;
+   public GameObject FlashLight;
+   public float removeBattery = 1f; //ค่าแบตลด
+   public float secondRemove = 1; //เวลา
+   public Slider batterySlider;
+   public GameObject pickupPanel;
+    void Start()
+    {
+        battery = batteryMax;
+        batterySlider.GetComponent<Slider>().maxValue = batteryMax;
+        batterySlider.GetComponent<Slider>().value = battery;
+        StartCoroutine(RemoveBattery(removeBattery , secondRemove));
+    }
+
+    
+    void Update()
+    {   
+        batterySlider.GetComponent<Slider>().value = battery;
+    }
+    public IEnumerator RemoveBattery(float value , float time)
+    {
+        while (true)
+        {
+          yield return new WaitForSeconds(time);
+          if (battery>0)
+          {
+            battery -= value;
+          }
+        }
+    }
+}
